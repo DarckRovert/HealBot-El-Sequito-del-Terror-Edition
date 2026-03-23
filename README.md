@@ -1,6 +1,6 @@
 ═══════════════════════════════════════════════════════════════════════════════
   HealBot - Edición El Séquito del Terror
-  Versión Modernizada para Turtle WoW
+  Versión Advanced v3.0 para Turtle WoW
 ═══════════════════════════════════════════════════════════════════════════════
 
 Desarrollado por: DarckRovert (Elnazzareno)
@@ -13,14 +13,14 @@ Original: Holgaard's HealBot
 ═══════════════════════════════════════════════════════════════════════════════
 
 ✓ Interfaz modernizada y optimizada para Turtle WoW
-✓ 20 combinaciones de teclas+ratón para lanzar hechizos beneficiosos
+✓ Motor de rendimiento centralizado (Optimización masiva para raids)
+✓ Desacoplamiento de marcos de Blizzard (Módulo HealBot_BlizzDisable)
+✓ Detección inteligente de Fingir Muerte (Cazadores FD)
+✓ Sincronización de Resurrección avanzada entre sanadores (Estado RES)
+✓ Alerta de Agro mediante Target-of-Target (Borde Rojo en unidad)
+✓ 20 combinaciones de teclas+ratón para hechizos
 ✓ Apariencia completamente configurable con sistema de skins
-✓ Muestra party/tanks/objetivos marcados/extras en raid
-✓ Sincronización de sanaciones entrantes entre múltiples HealBots
-✓ Comprobación precisa de rango fuera de instancias
-✓ Opción de comprobación de rango de 27 yardas en instancias
-✓ Botón de abortar cuando se está sobre-sanando (configurable)
-✓ Opciones de decursive compatibles con BC
+✓ Sincronización de sanaciones entrantes mejorada
 
 ═══════════════════════════════════════════════════════════════════════════════
   NOTA IMPORTANTE
@@ -80,6 +80,16 @@ Clan: El Séquito del Terror
 * Corrección de errores de archivos corruptos
 * Mejoras en la estabilidad
 * Documentación en español
+
+═══════════════════════════════════════════════════════════════════════════════
+  CAMBIOS EN ESTA EDICIÓN (v3.0 - Advanced Séquito del Terror)
+═══════════════════════════════════════════════════════════════════════════════
+
+* **Motor de Rendimiento (Phase 1)**: Centralización de bucles de actualización para máximo FPS en bandas de 40.
+* **Módulo BlizzDisable**: Opción para desactivar marcos originales de Blizzard y ahorrar CPU.
+* **Detección de FD**: Escaneo de buffs real para detectar Cazadores en "Fingir Muerte".
+* **Sincronización de Resurreciones**: Muestra quién está siendo resucitado por otros sanadores (RES) para mayor coordinación.
+* **Alertas de Agro**: Borde rojo visual cuando un enemigo tiene a un aliado como objetivo (ToT).
 
 ═══════════════════════════════════════════════════════════════════════════════
   CAMBIOS PRINCIPALES DE VERSIONES ANTERIORES

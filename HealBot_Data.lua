@@ -1,4 +1,5 @@
 HealBot_ConfigDefaults = {
+  DisableBlizz = 1,
   Version = HEALBOT_VERSION,
   AlertLevel = 0.95,
   AutoClose = 1,

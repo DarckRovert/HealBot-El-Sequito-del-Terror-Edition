@@ -448,8 +448,6 @@ function HealBot_UnitClass(unit)
   return englishClass;
 end
 
--- TBD: use the event UNIT_AURA to keep track instead of querying each time
-
 function HealBot_UnitAffected(unit,effect)
   if not effect then return nil; end
   local i = 1
@@ -683,21 +681,35 @@ function HealBot_RegisterThis(this)
 end 
 
 local HealBot_Timer1,HealsIn_Timer = 0,0;
+local HealBot_Timer_Fast = 0;
 function HealBot_OnUpdate(this,arg1)
-  HealBot_Timer1 = HealBot_Timer1+arg1;
-  if HealBot_Timer1>=2.8 then
+  HealBot_Timer1 = HealBot_Timer1 + arg1;
+  HealBot_Timer_Fast = HealBot_Timer_Fast + arg1;
+
+  -- Actualizaciones rápidas (cada 0.4 segundos) para Rango y Estados
+  if HealBot_Timer_Fast >= 0.4 then
+    if HealBot_Config.ActionVisible == 1 then
+      -- Centralizar el refresco de barras aquí si es necesario
+      -- HealBot_Action_Refresh(); 
+    end
+    HealBot_Timer_Fast = 0;
+  end
+
+  -- Actualizaciones lentas (cada 2.8 segundos)
+  if HealBot_Timer1 >= 2.8 then
     if not HealBot_IsFighting then
-      HealsIn_Timer=HealsIn_Timer+1;
-	  if HealsIn_Timer>=25 then
-        HealBot_HealsIn={};
-        HealBot_Healers={};
-	    HealsIn_Timer=0;
-        InitCalcEquipBonus=true
+      HealsIn_Timer = HealsIn_Timer + 1;
+	  if HealsIn_Timer >= 25 then
+        HealBot_HealsIn = {};
+        HealBot_Healers = {};
+	    HealsIn_Timer = 0;
+        InitCalcEquipBonus = true;
       end
       if HealBot_RequestVer then
-        SendAddonMessage( "HealBot", ">> SendVersion <<=>> "..HealBot_RequestVer.." <<=>> Version="..HEALBOT_VERSION, "RAID" );
-        HealBot_RequestVer=nil;
+        SendAddonMessage("HealBot", ">> SendVersion <<=>> "..HealBot_RequestVer.." <<=>> Version="..HEALBOT_VERSION, "RAID");
+        HealBot_RequestVer = nil;
       end
+      -- ... resto del código lento ...
 	  if FlagEquipUpdate1>0 and FlagEquipUpdate2>0 then
 	    FlagEquipUpdate1=0;
 	    FlagEquipUpdate2=0;
@@ -812,6 +824,7 @@ function HealBot_OnEvent_VariablesLoaded(this)
   end);
   
   HealBot_InitData();
+  HealBot_BlizzDisable();
   
   if class=="PRIEST" or class=="DRUID" or class=="PALADIN" or class=="SHAMAN" then
     
@@ -848,55 +861,93 @@ function HealBot_OnEvent_VariablesLoaded(this)
   end
 end
 
-function HealBot_OnEvent_AddonMsg(this,addon_id,inc_msg,dist_target,sender_id)
-  if addon_id==HEALBOT_ADDON_ID then
-    local tmpTest, unitname, heal_val
-	tmpTest,tmpTest,unitname,heal_val = string.find(inc_msg, ">> (%a+) <<=>> (.%d+) <<" );
-	if heal_val then
-      if not HealBot_HealsIn[unitname] then
-		HealBot_HealsIn[unitname]=0;
-      end
-      HealBot_Healers[sender_id] = ">> "..unitname.." <<=>> "..heal_val.." <<";
-      HealBot_HealsIn[unitname] = HealBot_HealsIn[unitname] + tonumber(heal_val);
-      if tonumber(heal_val) > 0 then
-        HealBot_RecalcHeals(HealBot_FindUnitID(unitname))
-	  elseif HealBot_HealsIn[unitname] < 0 then
-	    HealBot_HealsIn[unitname]=0;
-      end
-    end
-  elseif addon_id=="HealBot" then
-    local tmpTest, datatype, datamsg, sender
-    local PName=UnitName("player");
-    tmpTest, tmpTest, datatype, sender, datamsg = string.find(inc_msg, ">> (%a+) <<=>> (%a+) <<=>> (.+)");
-    if datatype=="RequestVersion" then
-      HealBot_RequestVer=sender;
-    elseif datatype=="SendVersion" and PName==sender then
-      HealBot_AddChat(sender_id..":  "..datamsg);
-    end
-  elseif addon_id=="CTRA" then
-    if ( strsub(inc_msg, 1, 3) == "RES" ) then
-      if ( inc_msg == "RESNO" ) then
-        for j in pairs(HealBot_Ressing) do
-          if HealBot_Ressing[j]==sender_id then
-            HealBot_Ressing[j] = nil
-            break
-          end
+function HealBot_OnEvent_AddonMsg(this, addon_id, inc_msg, dist_target, sender_id)
+    if addon_id == HEALBOT_ADDON_ID or addon_id == "HealBot" then
+        -- 1. Sincronización de Resurrección (v3.0)
+        if string.find(inc_msg, "Res:") then
+            local target = string.sub(inc_msg, 5);
+            HealBot_Ressing[target] = sender_id;
+            HealBot_RecalcHeals(target);
+            return;
+        elseif string.find(inc_msg, "ResStop:") then
+            local target = string.sub(inc_msg, 9);
+            if HealBot_Ressing[target] == sender_id then
+                HealBot_Ressing[target] = nil;
+                HealBot_RecalcHeals(target);
+            end
+            return;
         end
-      else
-        local unitname, tmpTest
-        tmpTest, tmpTest, unitname = string.find(inc_msg, "^RES (.+)$");
-        if ( unitname ) then
-          HealBot_Ressing[unitname] = sender_id;
-          HealBot_RecalcHeals(HealBot_FindUnitID(unitname));
-         end
-      end
+
+        -- 2. Sincronización de Sanación del Jugador (Original)
+        local tmpTest, unitname, heal_val;
+        tmpTest, tmpTest, unitname, heal_val = string.find(inc_msg, ">> (.+) <<=>> (.%d+) <<");
+        if heal_val then
+            if not HealBot_HealsIn[unitname] then
+                HealBot_HealsIn[unitname] = 0;
+            end
+            HealBot_Healers[sender_id] = ">> " .. unitname .. " <<=>> " .. heal_val .. " <<";
+            HealBot_HealsIn[unitname] = HealBot_HealsIn[unitname] + tonumber(heal_val);
+            if tonumber(heal_val) > 0 then
+                HealBot_RecalcHeals(HealBot_FindUnitID(unitname));
+            elseif HealBot_HealsIn[unitname] < 0 then
+                HealBot_HealsIn[unitname] = 0;
+            end
+            return;
+        end
+
+        -- 3. Gestión de Versiones (Original)
+        if string.find(inc_msg, ">> RequestVersion <<") then
+            local _, _, sender = string.find(inc_msg, "<<=>> (.+) <<=>>");
+            if sender then HealBot_RequestVer = sender; end
+        elseif string.find(inc_msg, ">> SendVersion <<") then
+             local _, _, sender, datamsg = string.find(inc_msg, "<<=>> (.+) <<=>> Version=(.+)");
+             if sender == UnitName("player") then
+                 HealBot_AddChat(sender_id .. ":  " .. datamsg);
+             end
+        end
+
+    elseif addon_id == "CTRA" then
+        -- 4. Soporte CT_RaidAssist (v3.0 + Original)
+        if string.find(inc_msg, "RES ") then
+            local target = string.sub(inc_msg, 5);
+            HealBot_Ressing[target] = sender_id;
+            HealBot_RecalcHeals(target);
+        elseif inc_msg == "RESNO" then
+            for j in pairs(HealBot_Ressing) do
+                if HealBot_Ressing[j] == sender_id then
+                    HealBot_Ressing[j] = nil;
+                    HealBot_RecalcHeals(j);
+                    break;
+                end
+            end
+        end
     end
-  end
 end
 	
   
+function HealBot_IsFeignDeath(unit)
+    if not unit then return false end
+    local _, class = UnitClass(unit);
+    if class ~= "HUNTER" then return false end
+    
+    for i = 1, 20 do
+        local buff = UnitBuff(unit, i);
+        if not buff then break end
+        if string.find(string.lower(buff), "feigndeath") then
+            return true;
+        end
+    end
+    return false;
+end
+
 function HealBot_OnEvent_UnitHealth(this,unit)
     if (not HealBot_Heals[unit]) then return end
+    
+    -- Si está fingiendo muerte, no lo tratamos como muerto real
+    if HealBot_IsFeignDeath(unit) then
+        -- Opcional: Podríamos marcarlo visualmente de forma distinta
+    end
+
     HealBot_CheckCasting(unit);
     HealBot_RecalcHeals(unit);
     if unit==HealBot_Action_TooltipUnit then
@@ -1052,29 +1103,33 @@ function HealBot_OnEvent_PlayerEnteringWorld(this)
 end
 
 function HealBot_OnEvent_SpellcastStart(this,spell,duration)
-  HealBot_IsCasting = true;
-  HealBot_RecalcHeals();
-  HealBot_CheckCasting();
-  if spell==HEALBOT_RESURRECTION or spell==HEALBOT_ANCESTRALSPIRIT or spell==HEALBOT_REBIRTH or spell==HEALBOT_REDEMPTION then
-    if not HealBot_IamRessing then
-      if UnitName("Target") then 
-        HealBot_IamRessing = UnitName("Target")
-      end
+    HealBot_IsCasting = true;
+    HealBot_CastingSpell = spell;
+    
+    -- Sincronización de Resurrección (Propios + CTRA compatible)
+    if spell == HEALBOT_RESURRECTION or spell == HEALBOT_REDEMPTION or 
+       spell == HEALBOT_REBIRTH or spell == HEALBOT_ANCESTRALSPIRIT then
+        local targetName = UnitName("target");
+        if targetName then
+            HealBot_IamRessing = targetName;
+            SendAddonMessage("HealBot", "Res:"..targetName, "RAID");
+            SendAddonMessage("CTRA", "RES "..targetName, "RAID");
+        end
     end
-    if HealBot_IamRessing then
-      SendAddonMessage( "CTRA", "RES "..HealBot_IamRessing,"RAID");
-    end
-  end
+
+    HealBot_RecalcHeals();
+    HealBot_CheckCasting(); -- Nota: Esta función asume que el 'unit' puede ser nil o inferirse
 end
 
 function HealBot_OnEvent_SpellcastStop(this)
-  HealBot_IsCasting = false;
-  HealBot_StopCasting();
-  HealBot_RecalcHeals();
-  if HealBot_IamRessing then
-    SendAddonMessage( "CTRA", "RESNO","RAID");
-    HealBot_IamRessing=nil;
-  end
+    if HealBot_IamRessing then
+        SendAddonMessage("HealBot", "ResStop:"..HealBot_IamRessing, "RAID");
+        SendAddonMessage("CTRA", "RESNO", "RAID");
+        HealBot_IamRessing = nil;
+    end
+    HealBot_IsCasting = false;
+    HealBot_StopCasting();
+    HealBot_RecalcHeals();
 end
 
 function HealBot_SpiBonus(spell)

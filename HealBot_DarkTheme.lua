@@ -4,7 +4,7 @@
 -- Creado por DarckRovert (Elnazzareno)
 -- ═════════════════════════════════════════════════════════════════════════
 
--- Aplicar temática oscura de El Séquito del Terror
+-- Aplicar temática oscura de El Séquito del Terror a las Opciones
 function HealBot_ApplyDarkTheme()
     if HealBot_Options then
         -- Fondo morado oscuro con transparencia
@@ -20,21 +20,23 @@ function HealBot_ApplyDarkTheme()
     end
 end
 
+-- Aplicar temática oscura al panel de acciones principal
+function HealBot_ApplyActionTheme()
+    if HealBot_Action then
+        -- Usar los mismos colores para consistencia
+        HealBot_Action:SetBackdropColor(0.08, 0, 0.15, 0.92);
+        HealBot_Action:SetBackdropBorderColor(0.5, 0.1, 0.7, 1);
+    end
+end
+
 -- Event frame para aplicar tema cuando se carga el addon
 local themeFrame = CreateFrame("Frame");
 themeFrame:RegisterEvent("ADDON_LOADED");
-themeFrame:SetScript("OnEvent", function()
+-- En WoW 1.12.1 (Lua 5.0), los argumentos se pasan explícitamente a la función del script
+themeFrame:SetScript("OnEvent", function(self, event, arg1)
+    -- arg1 es el nombre del addon en ADDON_LOADED
     if event == "ADDON_LOADED" and arg1 == "HealBot" then
-        -- Aplicar tema inmediatamente
         HealBot_ApplyDarkTheme();
-        
-        -- Hook para aplicar tema cuando se muestra la ventana
-        if HealBot_Options and HealBot_Options.Show then
-            local originalShow = HealBot_Options.Show;
-            HealBot_Options.Show = function(self)
-                originalShow(self);
-                HealBot_ApplyDarkTheme();
-            end
-        end
+        HealBot_ApplyActionTheme();
     end
 end);

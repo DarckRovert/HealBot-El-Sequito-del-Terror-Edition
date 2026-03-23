@@ -1548,6 +1548,7 @@ function HealBot_Options_OnShow(this)
   HealBot_Options_ExtraSort_Refresh();
   HealBot_Options_TooltipPos_Refresh();
   HealBot_Options_SetEFGroups()
+  HealBot_ApplyDarkTheme(); -- Aplicar tema de El Séquito del Terror
 end
 
 function HealBot_Options_SetEFGroups()

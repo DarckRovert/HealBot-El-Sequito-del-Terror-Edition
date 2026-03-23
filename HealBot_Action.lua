@@ -138,6 +138,22 @@ function HealBot_Action_EnableButton(button)
   local sb=HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin];
   local sa=HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin];
   local r,g,b,a = HealBot_HealthColor(button.unit,hlth,maxhlth)
+  
+  -- Séquito del Terror v3.0: Detección de Desconexión
+  if not UnitIsConnected(unit) then
+    name = name .. " (OFF)";
+    a = 0.3; -- Atenuar si está offline
+  end
+
+  -- Séquito del Terror v3.0: Alerta de Agro (ToT)
+  -- Si nuestro objetivo (enemigo) está mirando a este aliado, marcamos borde en rojo
+  local br, bg, bb = HealBot_Config.borcolr[HealBot_Config.Current_Skin], HealBot_Config.borcolg[HealBot_Config.Current_Skin], HealBot_Config.borcolb[HealBot_Config.Current_Skin];
+  if UnitExists("target") and UnitCanAttack("player", "target") then
+      if UnitIsUnit("targettarget", unit) then
+          br, bg, bb = 1, 0, 0; -- Rojo brillante para Agro
+      end
+  end
+  button:SetBackdropBorderColor(br, bg, bb, HealBot_Config.borcola[HealBot_Config.Current_Skin]);
   local btextheight=HealBot_Config.btextheight[HealBot_Config.Current_Skin]
   local bwidth = HealBot_Config.bwidth[HealBot_Config.Current_Skin]
   local textlen = floor(5+(((bwidth*1.8)/btextheight)-(btextheight/2)))-2
@@ -201,6 +217,12 @@ function HealBot_Action_EnableButton(button)
     end
   end
   
+  if HealBot_IsFeignDeath(unit) then
+    name = name .. " (FD)";
+  elseif HealBot_Ressing[name] then
+    name = name .. " (RES)";
+  end
+
   local barText ="";
   if HealBot_Config.ShowHealthOnBar==1 and maxhlth then
     if HealBot_Config.BarHealthType==1 then
@@ -1232,6 +1254,7 @@ function HealBot_Action_OnShow(this)
     HealBot_Config.borcolg[HealBot_Config.Current_Skin],
     HealBot_Config.borcolb[HealBot_Config.Current_Skin],
     HealBot_Config.borcola[HealBot_Config.Current_Skin]);
+  HealBot_ApplyActionTheme(); -- Aplicar tema de El Séquito del Terror
 end
 
 function HealBot_Action_OnHide(this)
