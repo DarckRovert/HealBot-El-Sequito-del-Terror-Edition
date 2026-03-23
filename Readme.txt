@@ -1,6 +1,6 @@
 ═══════════════════════════════════════════════════════════════════════════════
   HealBot - Edición El Séquito del Terror
-  Versión Modernizada para Turtle WoW
+  Versión Advanced v3.0 para Turtle WoW
 ═══════════════════════════════════════════════════════════════════════════════
 
 Desarrollado por: DarckRovert (Elnazzareno)
@@ -13,14 +13,14 @@ Original: Holgaard's HealBot
 ═══════════════════════════════════════════════════════════════════════════════
 
 ✓ Interfaz modernizada y optimizada para Turtle WoW
-✓ 20 combinaciones de teclas+ratón para lanzar hechizos beneficiosos
+✓ Motor de rendimiento centralizado (Optimización masiva para raids)
+✓ Desacoplamiento de marcos de Blizzard (Módulo HealBot_BlizzDisable)
+✓ Detección inteligente de Fingir Muerte (Cazadores FD)
+✓ Sincronización de Resurrección avanzada entre sanadores (Estado RES)
+✓ Alerta de Agro mediante Target-of-Target (Borde Rojo en unidad)
+✓ 20 combinaciones de teclas+ratón para hechizos
 ✓ Apariencia completamente configurable con sistema de skins
-✓ Muestra party/tanks/objetivos marcados/extras en raid
-✓ Sincronización de sanaciones entrantes entre múltiples HealBots
-✓ Comprobación precisa de rango fuera de instancias
-✓ Opción de comprobación de rango de 27 yardas en instancias
-✓ Botón de abortar cuando se está sobre-sanando (configurable)
-✓ Opciones de decursive compatibles con BC
+✓ Sincronización de sanaciones entrantes mejorada
 
 ═══════════════════════════════════════════════════════════════════════════════
   NOTA IMPORTANTE
@@ -71,44 +71,14 @@ Creador: DarckRovert (Elnazzareno en el juego)
 Clan: El Séquito del Terror
 
 ═══════════════════════════════════════════════════════════════════════════════
-  CAMBIOS EN ESTA EDICIÓN (v2.0 - El Séquito del Terror)
+  CAMBIOS EN ESTA EDICIÓN (v3.0 - Advanced Séquito del Terror)
 ═══════════════════════════════════════════════════════════════════════════════
 
-* Interfaz completamente modernizada
-* Actualización de créditos y autoría
-* Optimización para Turtle WoW
-* Corrección de errores de archivos corruptos
-* Mejoras en la estabilidad
-* Documentación en español
-
-═══════════════════════════════════════════════════════════════════════════════
-  CAMBIOS PRINCIPALES DE VERSIONES ANTERIORES
-═══════════════════════════════════════════════════════════════════════════════
-
-v1.126
-------
-* Nuevas opciones para apuntar y lanzar en barras deshabilitadas
-* Indicadores de resurrección añadidos
-* Más opciones de tooltips e información en las barras
-* Registro con TitanPanel en categoría Interface
-
-v1.125
-------
-* Opciones de skin para cambiar y guardar la apariencia
-* Opciones de decursive compatibles con BC
-* Opciones de tooltip mejoradas
-* Aumento significativo de rendimiento
-
-v1.124
-------
-* Botones de ratón medio y derecho añadidos a combo keys
-
-v1.123
-------
-* Comunicación entre sanadores usando HealBot para mostrar sanaciones entrantes
-* Integración con CT_MOD Control Panel y CTRA
-* Configuración de opacidad para barras de HealBot
-* Configuración de opacidad para indicadores de sanación entrante
+* **Motor de Rendimiento (Phase 1)**: Centralización de bucles de actualización para máximo FPS en bandas de 40.
+* **Módulo BlizzDisable**: Opción para desactivar marcos originales de Blizzard y ahorrar CPU.
+* **Detección de FD**: Escaneo de buffs real para detectar Cazadores en "Fingir Muerte".
+* **Sincronización de Resurreciones**: Muestra quién está siendo resucitado por otros sanadores (RES) para mayor coordinación.
+* **Alertas de Agro**: Borde rojo visual cuando un enemigo tiene a un aliado como objetivo (ToT).
 
 ═══════════════════════════════════════════════════════════════════════════════
   CRÉDITOS
