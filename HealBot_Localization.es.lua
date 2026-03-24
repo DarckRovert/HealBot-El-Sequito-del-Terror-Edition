@@ -19,16 +19,16 @@ HEALBOT_MAGIC_en = "Magic";
 HEALBOT_POISON_en = "Poison";
 HEALBOT_CURSE_en = "Curse";
 
--- Clases (deben estar en inglés para coincidir con el juego)
-HEALBOT_DRUID = "Druid";
-HEALBOT_HUNTER = "Hunter";
-HEALBOT_MAGE = "Mage";
-HEALBOT_PALADIN = "Paladin";
-HEALBOT_PRIEST = "Priest";
-HEALBOT_ROGUE = "Rogue";
-HEALBOT_SHAMAN = "Shaman";
-HEALBOT_WARLOCK = "Warlock";
-HEALBOT_WARRIOR = "Warrior";
+-- Clases (traducción para coincidir con UnitClass cliente ES)
+HEALBOT_DRUID = "Druida";
+HEALBOT_HUNTER = "Cazador";
+HEALBOT_MAGE = "Mago";
+HEALBOT_PALADIN = "Paladín";
+HEALBOT_PRIEST = "Sacerdote";
+HEALBOT_ROGUE = "Pícaro";
+HEALBOT_SHAMAN = "Chamán";
+HEALBOT_WARLOCK = "Brujo";
+HEALBOT_WARRIOR = "Guerrero";
 
 HEALBOT_BANDAGES = "Bandages";
 

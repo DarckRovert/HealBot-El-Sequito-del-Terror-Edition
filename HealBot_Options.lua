@@ -1409,45 +1409,45 @@ function HealBot_Options_EditBox_OnLoad(this,text)
 end
 
 function HealBot_Options_Click_OnTextChanged(this)
-  local class=UnitClass("Player");
+  local class=UnitClass("player");
   local combo = HealBot_Config.KeyCombo[class]
   local button = HealBot_Options_ComboClass_Button(HealBot_Options_ComboButtons_Button)
-  combo[button] = this:GetText()
+  if combo then combo[button] = this:GetText() end
 end
 
 function HealBot_Options_Shift_OnTextChanged(this)
-  local class=UnitClass("Player");
+  local class=UnitClass("player");
   local combo = HealBot_Config.KeyCombo[class]
   local button = HealBot_Options_ComboClass_Button(HealBot_Options_ComboButtons_Button)
-  combo["Shift"..button] = this:GetText()
+  if combo then combo["Shift"..button] = this:GetText() end
 end
 
 function HealBot_Options_Ctrl_OnTextChanged(this)
-  local class=UnitClass("Player");
+  local class=UnitClass("player");
   local combo = HealBot_Config.KeyCombo[class]
   local button = HealBot_Options_ComboClass_Button(HealBot_Options_ComboButtons_Button)
-  combo["Ctrl"..button] = this:GetText()
+  if combo then combo["Ctrl"..button] = this:GetText() end
 end
 
 function HealBot_Options_ShiftCtrl_OnTextChanged(this)
-  local class=UnitClass("Player");
+  local class=UnitClass("player");
   local combo = HealBot_Config.KeyCombo[class]
   local button = HealBot_Options_ComboClass_Button(HealBot_Options_ComboButtons_Button)
-  combo["ShiftCtrl"..button] = this:GetText()
+  if combo then combo["ShiftCtrl"..button] = this:GetText() end
 end
 
 function HealBot_Options_DisClick_OnTextChanged(this)
-  local class=UnitClass("Player");
+  local class=UnitClass("player");
   local combo = HealBot_Config.DisKeyCombo[class]
   local button = HealBot_Options_ComboClass_Button(HealBot_Options_DisComboButtons_Button)
-  combo[button] = this:GetText()
+  if combo then combo[button] = this:GetText() end
 end
 
 function HealBot_Options_DisAlt_OnTextChanged(this)
-  local class=UnitClass("Player");
+  local class=UnitClass("player");
   local combo = HealBot_Config.DisKeyCombo[class]
   local button = HealBot_Options_ComboClass_Button(HealBot_Options_DisComboButtons_Button)
-  combo["Alt"..button] = this:GetText()
+  if combo then combo["Alt"..button] = this:GetText() end
 end
 
 function HealBot_Options_EnableHealthy_OnLoad(this,text)
