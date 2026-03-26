@@ -21,6 +21,7 @@ Original: Holgaard's HealBot
 ✓ 20 combinaciones de teclas+ratón para hechizos
 ✓ Apariencia completamente configurable con sistema de skins
 ✓ Sincronización de sanaciones entrantes mejorada
+✓ **Séquito Ecosystem Compatible**: Integración con la red táctica de TerrorSquadAI y WCS_Brain para prioridades de sanación automáticas.
 
 ═══════════════════════════════════════════════════════════════════════════════
   NOTA IMPORTANTE
