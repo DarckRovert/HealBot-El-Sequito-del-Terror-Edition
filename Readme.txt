@@ -1,6 +1,6 @@
 ═══════════════════════════════════════════════════════════════════════════════
   HealBot - Edición El Séquito del Terror
-  Versión Advanced v3.0 para Turtle WoW
+  Versión Máximo Nivel v4.0 para Turtle WoW
 ═══════════════════════════════════════════════════════════════════════════════
 
 Desarrollado por: DarckRovert (Elnazzareno)
@@ -12,15 +12,19 @@ Original: Holgaard's HealBot
   CARACTERÍSTICAS PRINCIPALES
 ═══════════════════════════════════════════════════════════════════════════════
 
-✓ Interfaz modernizada y optimizada para Turtle WoW
-✓ Motor de rendimiento centralizado (Optimización masiva para raids)
-✓ Desacoplamiento de marcos de Blizzard (Módulo HealBot_BlizzDisable)
-✓ Detección inteligente de Fingir Muerte (Cazadores FD)
-✓ Sincronización de Resurrección avanzada entre sanadores (Estado RES)
-✓ Alerta de Agro mediante Target-of-Target (Borde Rojo en unidad)
+✓ Motor Trilineal: 3 temporizadores (0.2s / 0.5s / 3.0s) para FPS máximo en raid
+✓ Barra de salud degradada: verde→amarillo→rojo según porcentaje de HP
+✓ Pulso visual para unidades en estado crítico (<20% HP)
+✓ Bordes de barra con color de clase WoW (Guerrero naranja, Mago cyan, etc.)
+✓ Borde dinámico del panel: morado (paz) o rojo (combate)
+✓ StatusEngine unificado: AFK, DND, OFF, FD, RES, THREAT en texto de barra
+✓ TerrorMeter Bridge: amenaza alta mostrada en naranja desde el addon del clan
+✓ BigWigs Bridge: avisos de boss mostrados en el panel de sanación
+✓ Alerta de Agro (ToT) en rojo sobreescribiendo cualquier otro color de borde
 ✓ 20 combinaciones de teclas+ratón para hechizos
-✓ Apariencia completamente configurable con sistema de skins
-✓ Sincronización de sanaciones entrantes mejorada
+✓ Sincronización inteligente con HealBot, CTRA, TerrorMeter y BigWigs
+✓ **Séquito Ecosystem Compatible**: Integración con la red táctica de TerrorSquadAI y WCS_Brain para prioridades de sanación automáticas.
+✓ **Localización Completa**: 344 líneas de traducción española (HealBot_Localization.es.lua)
 
 ═══════════════════════════════════════════════════════════════════════════════
   NOTA IMPORTANTE
@@ -71,14 +75,59 @@ Creador: DarckRovert (Elnazzareno en el juego)
 Clan: El Séquito del Terror
 
 ═══════════════════════════════════════════════════════════════════════════════
-  CAMBIOS EN ESTA EDICIÓN (v3.0 - Advanced Séquito del Terror)
+  CHANGELOG
 ═══════════════════════════════════════════════════════════════════════════════
 
+v9.3.0 [God-Tier]
+-----------------
+* Versión interna unificada con ecosistema v9.3.0 God-Tier
+* Corrección: HEALBOT_VERSION alineado con TOC (v9.3.0)
+* Compatibilidad total con WCS_Brain v9.3.0 (14-Tab Hub)
+
+v3.0 - Advanced Séquito del Terror
+------------------------------------
 * **Motor de Rendimiento (Phase 1)**: Centralización de bucles de actualización para máximo FPS en bandas de 40.
 * **Módulo BlizzDisable**: Opción para desactivar marcos originales de Blizzard y ahorrar CPU.
 * **Detección de FD**: Escaneo de buffs real para detectar Cazadores en "Fingir Muerte".
 * **Sincronización de Resurreciones**: Muestra quién está siendo resucitado por otros sanadores (RES) para mayor coordinación.
 * **Alertas de Agro**: Borde rojo visual cuando un enemigo tiene a un aliado como objetivo (ToT).
+
+v2.0 - El Séquito del Terror
+------------------------------
+* Interfaz completamente modernizada
+* Actualización de créditos y autoría
+* Optimización para Turtle WoW
+* Corrección de errores de archivos corruptos
+* Documentación en español
+
+═══════════════════════════════════════════════════════════════════════════════
+  CAMBIOS PRINCIPALES DE VERSIONES ANTERIORES
+═══════════════════════════════════════════════════════════════════════════════
+
+v1.126
+------
+* Nuevas opciones para apuntar y lanzar en barras deshabilitadas
+* Indicadores de resurrección añadidos
+* Más opciones de tooltips e información en las barras
+* Registro con TitanPanel en categoría Interface
+
+v1.125
+------
+* Opciones de skin para cambiar y guardar la apariencia
+* Opciones de decursive compatibles con BC
+* Opciones de tooltip mejoradas
+* Aumento significativo de rendimiento
+
+v1.124
+------
+* Botones de ratón medio y derecho añadidos a combo keys
+
+v1.123
+------
+* Comunicación entre sanadores usando HealBot para mostrar sanaciones entrantes
+* Integración con CT_MOD Control Panel y CTRA
+* Configuración de opacidad para barras de HealBot
+* Configuración de opacidad para indicadores de sanación entrante
 
 ═══════════════════════════════════════════════════════════════════════════════
   CRÉDITOS

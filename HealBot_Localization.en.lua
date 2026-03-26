@@ -1,6 +1,6 @@
 -- ═══════════════════════════════════════════════════════════════════════════
 -- HealBot - El Séquito del Terror Edition
--- Version 2.0
+-- Version 4.0 - Máximo Nivel
 -- 
 -- Developed by: DarckRovert (Elnazzareno)
 -- Guild: El Séquito del Terror
@@ -8,7 +8,7 @@
 -- Original: Holgaard's HealBot
 -- ═══════════════════════════════════════════════════════════════════════════
 
-HEALBOT_VERSION = "v3.0 - El Séquito del Terror Edition";
+HEALBOT_VERSION = "v4.0 - El Séquito del Terror Edition [Máximo Nivel]";
 
 -------------
 -- ENGLISH --

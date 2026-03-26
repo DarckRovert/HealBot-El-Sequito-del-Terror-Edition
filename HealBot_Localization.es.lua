@@ -1,14 +1,14 @@
 -- ═════════════════════════════════════════════════════════════════════════
 -- HealBot - Edición El Séquito del Terror
 -- Traducción al Español
--- Version 9.3.0 - God-Tier
+-- Version 4.0 - Máximo Nivel
 -- ═════════════════════════════════════════════════════════════════════════
 
 --------------
 -- ESPAÑOL --
 --------------
 
-HEALBOT_VERSION = "v9.3.0 - El Séquito del Terror Edition [God-Tier]";
+HEALBOT_VERSION = "v4.0 - El Séquito del Terror [Máximo Nivel]";
 
 HEALBOT_ADDON = "HealBot " .. HEALBOT_VERSION;
 HEALBOT_LOADED = " cargado. Creado por DarckRovert (Elnazzareno) para El Séquito del Terror";
