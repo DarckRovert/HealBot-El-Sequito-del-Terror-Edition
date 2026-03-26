@@ -1275,6 +1275,7 @@ function HealBot_Options_CDCButRight_OnSelect()
 end
 
 function HealBot_Options_CDC_SetCombo(spell, button, class)
+  if not HealBot_Config.KeyCombo[class] then HealBot_Config.KeyCombo[class] = {} end
   local combo = HealBot_Config.KeyCombo[class]
   combo["Alt"..button] = spell
 end
