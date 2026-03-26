@@ -367,7 +367,13 @@ function HealBot_Action_PositionButton(button,OsetX,OsetY,bwidth,bheight,checked
     headerno=headerno+1;
     local headerobj=getglobal("HealBot_Action_Header"..headerno);
     local tmpY=OsetY
-    headerobj:SetText(header)
+    
+    -- v4.0 BigWigs Boss Warn Display
+    if headerno == 1 and HealBot_BossWarn then
+      headerobj:SetText("|cffff0000" .. HealBot_BossWarn .. "|r");
+    else
+      headerobj:SetText(header);
+    end
     headerobj:Show();
     headerobj:ClearAllPoints();
     headerobj:SetHeight(bheight);

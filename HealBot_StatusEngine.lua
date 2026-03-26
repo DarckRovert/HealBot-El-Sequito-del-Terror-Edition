@@ -17,9 +17,9 @@ function HealBot_GetUnitStatus(unit)
   -- Desconexión (máxima prioridad)
   if not UnitIsConnected(unit) then return "OFF"; end
 
-  -- AFK / DND
-  if UnitIsAFK(unit) then return "AFK"; end
-  if UnitIsDND(unit) then return "DND"; end
+  -- AFK / DND (Verificación segura de API para Vanilla 1.12.1)
+  if UnitIsAFK and UnitIsAFK(unit) then return "AFK"; end
+  if UnitIsDND and UnitIsDND(unit) then return "DND"; end
 
   -- Fingir muerte (Cazador)
   if HealBot_IsFeignDeath and HealBot_IsFeignDeath(unit) then return "FD"; end

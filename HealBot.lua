@@ -1053,6 +1053,7 @@ end
 function HealBot_OnEvent_PlayerRegenEnabled(this)
   HealBot_IsFighting = false;
   Delay_RecalcParty=1;
+  if HealBot_ThreatMonitor_Reset then HealBot_ThreatMonitor_Reset(); end
 end
 
 function HealBot_OnEvent_PlayerTargetChanged(this)
