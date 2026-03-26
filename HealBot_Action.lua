@@ -124,123 +124,193 @@ function HealBot_CanHeal(unit)
   return false
 end
 
+-- ═══════════════════════════════════════════════════════════════════════
+-- HealBot v4.0 - EnableButton Visual Overhaul
+-- Séquito del Terror Edition — Lua 5.0 Estricto
+-- ═══════════════════════════════════════════════════════════════════════
 function HealBot_Action_EnableButton(button)
+  -- Guard: verificar unidad válida antes de cualquier acceso
+  if not button or not button.unit then return; end
   local unit = button.unit;
-  local hlth=UnitHealth(unit);
-  local maxhlth=UnitHealthMax(unit);
-  local name = UnitName(unit);
-  local bar = HealBot_Action_HealthBar(button);
-  local bar2 = HealBot_Action_HealthBar2(button);    
-  local btexture=HealBot_Config.btexture[HealBot_Config.Current_Skin];
-  local bheight=HealBot_Config.bheight[HealBot_Config.Current_Skin];
-  local sr=HealBot_Config.btextenabledcolr[HealBot_Config.Current_Skin];
-  local sg=HealBot_Config.btextenabledcolg[HealBot_Config.Current_Skin];
-  local sb=HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin];
-  local sa=HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin];
-  local r,g,b,a = HealBot_HealthColor(button.unit,hlth,maxhlth)
-  
-  -- Séquito del Terror v3.0: Detección de Desconexión
-  if not UnitIsConnected(unit) then
-    name = name .. " (OFF)";
-    a = 0.3; -- Atenuar si está offline
+  if not UnitExists(unit) then return; end
+
+  local hlth    = UnitHealth(unit);
+  local maxhlth = UnitHealthMax(unit);
+  local name    = UnitName(unit) or "";
+  local bar     = HealBot_Action_HealthBar(button);
+  local bar2    = HealBot_Action_HealthBar2(button);
+  local skin    = HealBot_Config.Current_Skin;
+
+  -- Colores de texto por defecto (habilitado)
+  local sr = HealBot_Config.btextenabledcolr[skin];
+  local sg = HealBot_Config.btextenabledcolg[skin];
+  local sb = HealBot_Config.btextenabledcolb[skin];
+  local sa = HealBot_Config.btextenabledcola[skin];
+
+  -- ── v4.0: Barra de Salud Degradada (verde→amarillo→rojo) ──────────────
+  local r, g, b, a;
+  if maxhlth and maxhlth > 0 then
+    r, g, b = HealBot_HealthGradient(hlth, maxhlth);
+    a = HealBot_Config.Barcola[skin];
+  else
+    r, g, b = HealBot_HealthColor(unit, hlth, maxhlth);
+    a = HealBot_Config.Barcola[skin];
   end
 
-  -- Séquito del Terror v3.0: Alerta de Agro (ToT)
-  -- Si nuestro objetivo (enemigo) está mirando a este aliado, marcamos borde en rojo
-  local br, bg, bb = HealBot_Config.borcolr[HealBot_Config.Current_Skin], HealBot_Config.borcolg[HealBot_Config.Current_Skin], HealBot_Config.borcolb[HealBot_Config.Current_Skin];
+  -- ── v4.0: Estado unificado del jugador via StatusEngine ──────────────
+  local unitStatus = nil;
+  if HealBot_GetUnitStatus then
+    unitStatus = HealBot_GetUnitStatus(unit);
+  end
+
+  -- Desconexión: atenuar barra
+  if unitStatus == "OFF" then
+    a = HEALBOT_OFFLINE_ALPHA;
+  end
+
+  -- ── v4.0: Borde de Barra según Prioridad ─────────────────────────────
+  -- Prioridad: Agro > Amenaza Alta > Color de Clase > Piel por defecto
+  local br = HealBot_Config.borcolr[skin];
+  local bg = HealBot_Config.borcolg[skin];
+  local bb = HealBot_Config.borcolb[skin];
+  local ba = HealBot_Config.borcola[skin];
+
+  -- v4.0: Amenaza alta (TerrorMeter Bridge)
+  if HealBot_ThreatHigh and HealBot_ThreatHigh[name] then
+    br = HEALBOT_COLOR_THREAT.R;
+    bg = HEALBOT_COLOR_THREAT.G;
+    bb = HEALBOT_COLOR_THREAT.B;
+  -- v4.0: Color de clase en el borde (cuando no hay otros indicadores)
+  elseif HealBot_GetClassColor then
+    local cr, cg, cb = HealBot_GetClassColor(unit);
+    br = cr * 0.8;
+    bg = cg * 0.8;
+    bb = cb * 0.8;
+  end
+
+  -- Agro (ToT) — máxima prioridad, sobreescribe todo lo anterior
   if UnitExists("target") and UnitCanAttack("player", "target") then
-      if UnitIsUnit("targettarget", unit) then
-          br, bg, bb = 1, 0, 0; -- Rojo brillante para Agro
-      end
+    if UnitIsUnit("targettarget", unit) then
+      br = HEALBOT_COLOR_AGGRO.R;
+      bg = HEALBOT_COLOR_AGGRO.G;
+      bb = HEALBOT_COLOR_AGGRO.B;
+    end
   end
-  button:SetBackdropBorderColor(br, bg, bb, HealBot_Config.borcola[HealBot_Config.Current_Skin]);
-  local btextheight=HealBot_Config.btextheight[HealBot_Config.Current_Skin]
-  local bwidth = HealBot_Config.bwidth[HealBot_Config.Current_Skin]
-  local textlen = floor(5+(((bwidth*1.8)/btextheight)-(btextheight/2)))-2
+  button:SetBackdropBorderColor(br, bg, bb, ba);
 
-  bar:SetMinMaxValues(0,maxhlth);
+  -- ── Dimensiones de texto ──────────────────────────────────────────────
+  local btextheight = HealBot_Config.btextheight[skin];
+  local bwidth      = HealBot_Config.bwidth[skin];
+  local textlen     = floor(5 + (((bwidth * 1.8) / btextheight) - (btextheight / 2))) - 2;
+
+  -- ── Valores de la barra ───────────────────────────────────────────────
+  bar:SetMinMaxValues(0, maxhlth);
   bar:SetValue(hlth);
   if HealBot_HealsIn[name] then
-    bar2:SetMinMaxValues(0,maxhlth);
-    bar2:SetValue(hlth+HealBot_HealsIn[name]);
+    bar2:SetMinMaxValues(0, maxhlth);
+    bar2:SetValue(hlth + HealBot_HealsIn[name]);
   else
     bar2:SetValue(0);
   end
-  bar.txt = getglobal(bar:GetName().."_text");
-  if (not HealBot_IsCasting and HealBot_CanHeal(unit)) then
---    button:Enable();
-    HealBot_Enabled[unit]=true;
-    bar:SetStatusBarColor(r,g,b,HealBot_Config.Barcola[HealBot_Config.Current_Skin]);
-    bar2:SetStatusBarColor(r,g,b,HealBot_Config.BarcolaInHeal[HealBot_Config.Current_Skin]);
-    if HealBot_Config.SetClassColourText==1 then
-      sr,sg,sb = HealBot_Action_ClassColour(unit);
+  bar.txt = getglobal(bar:GetName() .. "_text");
+
+  -- ── Color de barra según estado de sanación ───────────────────────────
+  if not HealBot_IsCasting and HealBot_CanHeal(unit) then
+    HealBot_Enabled[unit] = true;
+
+    -- v4.0: Pulso visual para salud crítica (< 20% HP)
+    local barAlpha = a;
+    if HealBot_Theme_GetPulseAlpha and maxhlth and maxhlth > 0 then
+      local pct = hlth / maxhlth;
+      barAlpha = HealBot_Theme_GetPulseAlpha(pct, a);
+    end
+
+    bar:SetStatusBarColor(r, g, b, barAlpha);
+    bar2:SetStatusBarColor(r, g, b, HealBot_Config.BarcolaInHeal[skin]);
+
+    -- Color de texto: clase, debuff, o default
+    if HealBot_Config.SetClassColourText == 1 then
+      sr, sg, sb = HealBot_Action_ClassColour(unit);
       sa = 1;
     elseif HealBot_UnitDebuff[unit] then
-      sr=HealBot_Config.btextcursecolr[HealBot_Config.Current_Skin];
-      sg=HealBot_Config.btextcursecolg[HealBot_Config.Current_Skin];
-      sb=HealBot_Config.btextcursecolb[HealBot_Config.Current_Skin];
-      sa=HealBot_Config.btextcursecola[HealBot_Config.Current_Skin];
+      sr = HealBot_Config.btextcursecolr[skin];
+      sg = HealBot_Config.btextcursecolg[skin];
+      sb = HealBot_Config.btextcursecolb[skin];
+      sa = HealBot_Config.btextcursecola[skin];
+    end
+
+    -- v4.0: Color de texto según estado (AFK, DND, THREAT)
+    if HealBot_GetStatusTextColor and unitStatus then
+      sr, sg, sb = HealBot_GetStatusTextColor(unit, sr, sg, sb);
     end
   else
---    button:Disable();
-    HealBot_Enabled[unit]=nil;
+    HealBot_Enabled[unit] = nil;
+    -- Ressing: texto en verde
     if HealBot_Ressing[UnitName(unit)] then
       if UnitIsDeadOrGhost(unit) then
-        sr=0.2;
-        sg=1.0;
-        sb=0.2;
-        sa=1;
+        sr = HEALBOT_COLOR_RES.R;
+        sg = HEALBOT_COLOR_RES.G;
+        sb = HEALBOT_COLOR_RES.B;
+        sa = 1;
       else
-        HealBot_Ressing[UnitName(unit)]=nil
-        sr=HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin];
-        sg=HealBot_Config.btextdisbledcolg[HealBot_Config.Current_Skin];
-        sb=HealBot_Config.btextdisbledcolb[HealBot_Config.Current_Skin];
-        sa=HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin];
+        HealBot_Ressing[UnitName(unit)] = nil;
+        sr = HealBot_Config.btextdisbledcolr[skin];
+        sg = HealBot_Config.btextdisbledcolg[skin];
+        sb = HealBot_Config.btextdisbledcolb[skin];
+        sa = HealBot_Config.btextdisbledcola[skin];
       end
     else
-      sr=HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin];
-      sg=HealBot_Config.btextdisbledcolg[HealBot_Config.Current_Skin];
-      sb=HealBot_Config.btextdisbledcolb[HealBot_Config.Current_Skin];
-      sa=HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin];
+      sr = HealBot_Config.btextdisbledcolr[skin];
+      sg = HealBot_Config.btextdisbledcolg[skin];
+      sb = HealBot_Config.btextdisbledcolb[skin];
+      sa = HealBot_Config.btextdisbledcola[skin];
     end
-    bar:SetStatusBarColor(r,g,b,HealBot_Config.bardisa[HealBot_Config.Current_Skin]);
-    bar2:SetStatusBarColor(r,g,b,HealBot_Config.bardisa[HealBot_Config.Current_Skin]);
+    bar:SetStatusBarColor(r, g, b, HealBot_Config.bardisa[skin]);
+    bar2:SetStatusBarColor(r, g, b, HealBot_Config.bardisa[skin]);
   end
 
-  if HealBot_Config.ShowClassOnBar==1 then
+  -- ── Nombre en la barra ─────────────────────────────────────────────────
+  if HealBot_Config.ShowClassOnBar == 1 then
     if UnitClass(unit) then
-      if HealBot_Config.ShowClassOnBarWithName==1 then
-        name=UnitClass(unit)..":"..name;
+      if HealBot_Config.ShowClassOnBarWithName == 1 then
+        name = UnitClass(unit) .. ":" .. name;
       else
-        name=UnitClass(unit);
+        name = UnitClass(unit);
       end
     end
   end
-  
-  if HealBot_IsFeignDeath(unit) then
-    name = name .. " (FD)";
-  elseif HealBot_Ressing[name] then
-    name = name .. " (RES)";
+
+  -- v4.0: Sufijo de estado unificado desde StatusEngine
+  if HealBot_GetStatusSuffix then
+    name = name .. HealBot_GetStatusSuffix(unit);
+  else
+    -- Fallback legado
+    if HealBot_IsFeignDeath(unit) then
+      name = name .. " (FD)";
+    elseif HealBot_Ressing[name] then
+      name = name .. " (RES)";
+    end
   end
 
-  local barText ="";
-  if HealBot_Config.ShowHealthOnBar==1 and maxhlth then
-    if HealBot_Config.BarHealthType==1 then
-      barText=" ("..hlth-maxhlth..")"
+  -- ── Texto de salud ─────────────────────────────────────────────────────
+  local barText = "";
+  if HealBot_Config.ShowHealthOnBar == 1 and maxhlth and maxhlth > 0 then
+    if HealBot_Config.BarHealthType == 1 then
+      barText = " (" .. (hlth - maxhlth) .. ")";
     else
-      barText=" ("..floor((hlth/maxhlth)*100).."%)"
+      barText = " (" .. floor((hlth / maxhlth) * 100) .. "%)";
     end
-	textlen=textlen-string.len(barText)
-	if textlen<1 then textlen=1; end
+    textlen = textlen - string.len(barText);
+    if textlen < 1 then textlen = 1; end
   end
-     
-  if string.len(name)>textlen then
-    barText = string.sub(name,1,textlen) .. '..'..barText;
+
+  if string.len(name) > textlen then
+    barText = string.sub(name, 1, textlen) .. ".." .. barText;
   else
-    barText = name..barText;
+    barText = name .. barText;
   end
   bar.txt:SetText(barText);
-  bar.txt:SetTextColor(sr,sg,sb,sa);
+  bar.txt:SetTextColor(sr, sg, sb, sa);
 end
 
 function HealBot_Action_EnableButtons()

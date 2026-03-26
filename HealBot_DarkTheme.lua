@@ -1,42 +1,101 @@
 -- ═════════════════════════════════════════════════════════════════════════
--- HealBot - Temática Oscura
--- El Séquito del Terror
+-- HealBot - Temática Visual Avanzada
+-- El Séquito del Terror Edition v4.0
 -- Creado por DarckRovert (Elnazzareno)
+-- Lua 5.0 Estricto — WoW 1.12.1
 -- ═════════════════════════════════════════════════════════════════════════
 
--- Aplicar temática oscura de El Séquito del Terror a las Opciones
+-- Estado del pulso visual
+local HB_PulseToggle  = false;
+local HB_PulseActive  = false;
+
+-- ─── Tema Principal ──────────────────────────────────────────────────────
+
+-- Aplicar temática oscura al panel de opciones
 function HealBot_ApplyDarkTheme()
-    if HealBot_Options then
-        -- Fondo morado oscuro con transparencia
-        HealBot_Options:SetBackdropColor(0.08, 0, 0.15, 0.92);
-        -- Borde morado brillante
-        HealBot_Options:SetBackdropBorderColor(0.5, 0.1, 0.7, 1);
-        
-        -- Cambiar color del header si existe
-        local header = getglobal("HealBot_Options_Header");
-        if header then
-            header:SetVertexColor(0.6, 0.2, 0.8);
-        end
+  if HealBot_Options then
+    HealBot_Options:SetBackdropColor(
+      HEALBOT_THEME_BG_R, HEALBOT_THEME_BG_G,
+      HEALBOT_THEME_BG_B, HEALBOT_THEME_BG_A
+    );
+    HealBot_Options:SetBackdropBorderColor(
+      HEALBOT_THEME_BORDER_R, HEALBOT_THEME_BORDER_G,
+      HEALBOT_THEME_BORDER_B, HEALBOT_THEME_BORDER_A
+    );
+    local header = getglobal("HealBot_Options_Header");
+    if header then
+      header:SetVertexColor(0.6, 0.2, 0.8);
     end
+  end
 end
 
--- Aplicar temática oscura al panel de acciones principal
+-- Aplicar temática oscura al panel de sanación principal
 function HealBot_ApplyActionTheme()
-    if HealBot_Action then
-        -- Usar los mismos colores para consistencia
-        HealBot_Action:SetBackdropColor(0.08, 0, 0.15, 0.92);
-        HealBot_Action:SetBackdropBorderColor(0.5, 0.1, 0.7, 1);
-    end
+  if HealBot_Action then
+    HealBot_Action:SetBackdropColor(
+      HEALBOT_THEME_BG_R, HEALBOT_THEME_BG_G,
+      HEALBOT_THEME_BG_B, HEALBOT_THEME_BG_A
+    );
+    HealBot_Action:SetBackdropBorderColor(
+      HEALBOT_THEME_BORDER_R, HEALBOT_THEME_BORDER_G,
+      HEALBOT_THEME_BORDER_B, HEALBOT_THEME_BORDER_A
+    );
+  end
 end
 
--- Event frame para aplicar tema cuando se carga el addon
+-- ─── Tema Dinámico de Combate ─────────────────────────────────────────────
+
+-- Actualizar borde del panel según si estamos en combate o no
+-- Llamar desde el timer Fast (0.5s) o desde eventos PLAYER_REGEN
+function HealBot_Theme_UpdateBorder()
+  if not HealBot_Action then return; end
+  if HealBot_IsFighting then
+    -- Rojo: en combate activo
+    HealBot_Action:SetBackdropBorderColor(
+      HEALBOT_COMBAT_BORDER_R, HEALBOT_COMBAT_BORDER_G,
+      HEALBOT_COMBAT_BORDER_B, HEALBOT_COMBAT_BORDER_A
+    );
+  else
+    -- Morado: en paz, icónico del Séquito del Terror
+    HealBot_Action:SetBackdropBorderColor(
+      HEALBOT_THEME_BORDER_R, HEALBOT_THEME_BORDER_G,
+      HEALBOT_THEME_BORDER_B, HEALBOT_THEME_BORDER_A
+    );
+  end
+end
+
+-- ─── Efecto Pulso Visual ─────────────────────────────────────────────────
+
+-- Alterna el efecto de pulso para barras críticas (< 20% HP)
+-- Llamar desde el timer Ultra-Fast (0.2s)
+function HealBot_Theme_TogglePulse()
+  HB_PulseToggle = not HB_PulseToggle;
+end
+
+-- Aplica el efecto de pulso a una barra de salud si corresponde
+-- pct: porcentaje de salud en rango 0-1
+-- Retorna el alfa final a usar en SetStatusBarColor
+function HealBot_Theme_GetPulseAlpha(pct, baseAlpha)
+  if not baseAlpha then baseAlpha = 1.0; end
+  if pct < HEALBOT_PULSE_THRESHOLD then
+    if HB_PulseToggle then
+      -- Atenuar a la mitad durante la fase "off" del pulso
+      return baseAlpha * 0.45;
+    else
+      return baseAlpha;
+    end
+  end
+  return baseAlpha;
+end
+
+-- ─── Carga con ADDON_LOADED ───────────────────────────────────────────────
+
 local themeFrame = CreateFrame("Frame");
 themeFrame:RegisterEvent("ADDON_LOADED");
--- En WoW 1.12.1 (Lua 5.0), los argumentos se pasan explícitamente a la función del script
-themeFrame:SetScript("OnEvent", function(self, event, arg1)
-    -- arg1 es el nombre del addon en ADDON_LOADED
-    if event == "ADDON_LOADED" and arg1 == "HealBot" then
-        HealBot_ApplyDarkTheme();
-        HealBot_ApplyActionTheme();
-    end
+themeFrame:SetScript("OnEvent", function()
+  -- En WoW 1.12.1 los args del script llegan como globales
+  if event == "ADDON_LOADED" and arg1 == "HealBot" then
+    HealBot_ApplyDarkTheme();
+    HealBot_ApplyActionTheme();
+  end
 end);

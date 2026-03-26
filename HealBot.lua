@@ -680,36 +680,58 @@ function HealBot_RegisterThis(this)
 
 end 
 
-local HealBot_Timer1,HealsIn_Timer = 0,0;
-local HealBot_Timer_Fast = 0;
-function HealBot_OnUpdate(this,arg1)
-  HealBot_Timer1 = HealBot_Timer1 + arg1;
-  HealBot_Timer_Fast = HealBot_Timer_Fast + arg1;
+local HB_T_UltraFast = 0;
+local HB_T_Fast      = 0;
+local HB_T_Slow      = 0;
+local HealsIn_Timer  = 0;
 
-  -- Actualizaciones rápidas (cada 0.4 segundos) para Rango y Estados
-  if HealBot_Timer_Fast >= 0.4 then
-    if HealBot_Config.ActionVisible == 1 then
-      -- Centralizar el refresco de barras aquí si es necesario
-      -- HealBot_Action_Refresh(); 
+function HealBot_OnUpdate(this, arg1)
+  HB_T_UltraFast = HB_T_UltraFast + arg1;
+  HB_T_Fast      = HB_T_Fast + arg1;
+  HB_T_Slow      = HB_T_Slow + arg1;
+
+  -- ── ULTRA-FAST (0.2s): Pulso visual, ToT scan, StatusEngine ──────────
+  if HB_T_UltraFast >= HEALBOT_TIMER_ULTRAFAST then
+    -- Alternar el toggle de pulso para barras críticas
+    if HealBot_Theme_TogglePulse then HealBot_Theme_TogglePulse(); end
+    -- Actualizar caché de estados de unidades
+    if HealBot_StatusEngine_Update then HealBot_StatusEngine_Update(); end
+    -- Actualizar timer de aviso de boss
+    if HealBot_ThreatMonitor_UpdateBossWarn then
+      HealBot_ThreatMonitor_UpdateBossWarn(HB_T_UltraFast);
     end
-    HealBot_Timer_Fast = 0;
+    HB_T_UltraFast = 0;
   end
 
-  -- Actualizaciones lentas (cada 2.8 segundos)
-  if HealBot_Timer1 >= 2.8 then
-    if not HealBot_IsFighting then
+  -- ── FAST (0.5s): Refresco de barras y borde de combate ───────────────
+  if HB_T_Fast >= HEALBOT_TIMER_FAST then
+    if HealBot_Config.ActionVisible == 1 then
+      HealBot_Action_EnableButtons();
+    end
+    -- Borde dinámico: morado (paz) o rojo (combate)
+    if HealBot_Theme_UpdateBorder then HealBot_Theme_UpdateBorder(); end
+    HB_T_Fast = 0;
+  end
+
+  -- ── SLOW (3.0s): Hechizos, equipo, versión ───────────────────────────
+  if HB_T_Slow >= HEALBOT_TIMER_SLOW then
+  if not HealBot_IsFighting then
       HealsIn_Timer = HealsIn_Timer + 1;
-	  if HealsIn_Timer >= 25 then
+      if HealsIn_Timer >= 25 then
         HealBot_HealsIn = {};
         HealBot_Healers = {};
-	    HealsIn_Timer = 0;
+        HealsIn_Timer = 0;
         InitCalcEquipBonus = true;
       end
       if HealBot_RequestVer then
-        SendAddonMessage("HealBot", ">> SendVersion <<=>> "..HealBot_RequestVer.." <<=>> Version="..HEALBOT_VERSION, "RAID");
+        -- Fallback a PARTY si no estamos en raid
+        local chan = "RAID";
+        if GetNumRaidMembers() == 0 then chan = "PARTY"; end
+        if GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0 then
+          SendAddonMessage("HealBot", ">> SendVersion <<=>> "..HealBot_RequestVer.." <<=>> Version="..HEALBOT_VERSION, chan);
+        end
         HealBot_RequestVer = nil;
       end
-      -- ... resto del código lento ...
 	  if FlagEquipUpdate1>0 and FlagEquipUpdate2>0 then
 	    FlagEquipUpdate1=0;
 	    FlagEquipUpdate2=0;
@@ -750,7 +772,7 @@ function HealBot_OnUpdate(this,arg1)
     else
 	  HealsIn_Timer=0;
     end
-    HealBot_Timer1 = 0;
+    HB_T_Slow = 0;
     HealBot_SpamCnt = 0;
   end
 end
@@ -920,6 +942,19 @@ function HealBot_OnEvent_AddonMsg(this, addon_id, inc_msg, dist_target, sender_i
                     break;
                 end
             end
+        end
+    end
+
+    -- 5. v4.0: Ecosistema El Séquito del Terror — TerrorMeter Bridge
+    if addon_id == HEALBOT_TERRORMETER_MSG or addon_id == "TerrorMeter" then
+        if HealBot_ThreatMonitor_OnTerrorMeter then
+            HealBot_ThreatMonitor_OnTerrorMeter(sender_id, inc_msg);
+        end
+
+    -- 6. v4.0: Ecosistema El Séquito del Terror — BigWigs Bridge
+    elseif addon_id == HEALBOT_BIGWIGS_MSG or addon_id == "BigWigs" then
+        if HealBot_ThreatMonitor_OnBigWigs then
+            HealBot_ThreatMonitor_OnBigWigs(sender_id, inc_msg);
         end
     end
 end
