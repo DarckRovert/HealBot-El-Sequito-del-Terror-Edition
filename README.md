@@ -1,6 +1,6 @@
 ═══════════════════════════════════════════════════════════════════════════════
   HealBot - Edición El Séquito del Terror
-  Versión Advanced v3.0 para Turtle WoW
+  Versión God-Tier v9.3.0 para Turtle WoW
 ═══════════════════════════════════════════════════════════════════════════════
 
 Desarrollado por: DarckRovert (Elnazzareno)
@@ -22,6 +22,7 @@ Original: Holgaard's HealBot
 ✓ Apariencia completamente configurable con sistema de skins
 ✓ Sincronización de sanaciones entrantes mejorada
 ✓ **Séquito Ecosystem Compatible**: Integración con la red táctica de TerrorSquadAI y WCS_Brain para prioridades de sanación automáticas.
+✓ **Localización Completa**: 344 líneas de traducción española (HealBot_Localization.es.lua)
 
 ═══════════════════════════════════════════════════════════════════════════════
   NOTA IMPORTANTE
@@ -72,25 +73,30 @@ Creador: DarckRovert (Elnazzareno en el juego)
 Clan: El Séquito del Terror
 
 ═══════════════════════════════════════════════════════════════════════════════
-  CAMBIOS EN ESTA EDICIÓN (v2.0 - El Séquito del Terror)
+  CHANGELOG
 ═══════════════════════════════════════════════════════════════════════════════
 
-* Interfaz completamente modernizada
-* Actualización de créditos y autoría
-* Optimización para Turtle WoW
-* Corrección de errores de archivos corruptos
-* Mejoras en la estabilidad
-* Documentación en español
+v9.3.0 [God-Tier]
+-----------------
+* Versión interna unificada con ecosistema v9.3.0 God-Tier
+* Corrección: HEALBOT_VERSION alineado con TOC (v9.3.0)
+* Compatibilidad total con WCS_Brain v9.3.0 (14-Tab Hub)
 
-═══════════════════════════════════════════════════════════════════════════════
-  CAMBIOS EN ESTA EDICIÓN (v3.0 - Advanced Séquito del Terror)
-═══════════════════════════════════════════════════════════════════════════════
-
+v3.0 - Advanced Séquito del Terror
+------------------------------------
 * **Motor de Rendimiento (Phase 1)**: Centralización de bucles de actualización para máximo FPS en bandas de 40.
 * **Módulo BlizzDisable**: Opción para desactivar marcos originales de Blizzard y ahorrar CPU.
 * **Detección de FD**: Escaneo de buffs real para detectar Cazadores en "Fingir Muerte".
 * **Sincronización de Resurreciones**: Muestra quién está siendo resucitado por otros sanadores (RES) para mayor coordinación.
 * **Alertas de Agro**: Borde rojo visual cuando un enemigo tiene a un aliado como objetivo (ToT).
+
+v2.0 - El Séquito del Terror
+------------------------------
+* Interfaz completamente modernizada
+* Actualización de créditos y autoría
+* Optimización para Turtle WoW
+* Corrección de errores de archivos corruptos
+* Documentación en español
 
 ═══════════════════════════════════════════════════════════════════════════════
   CAMBIOS PRINCIPALES DE VERSIONES ANTERIORES
