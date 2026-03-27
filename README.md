@@ -75,6 +75,38 @@ Creador: DarckRovert (Elnazzareno en el juego)
 Clan: El Séquito del Terror
 
 ═══════════════════════════════════════════════════════════════════════════════
+  INTEGRACIÓN CON EL ECOSISTEMA DEL TERROR (SQUADMIND)
+═══════════════════════════════════════════════════════════════════════════════
+
+HealBot no está solo; es el **Soporte Vital** de la Red Neural de 10 addons del clan. 
+Funciona en simbiosis con el resto de la interfaz para prevenir Wipes.
+
+■ **Conexión con TerrorMeter**:
+  Si un DPS roba el aggro del tanque (ToT Alert), TerrorMeter avisa a HealBot en microsegundos.
+  El cuadro de ese jugador **parpadeará en ROJO INTENSO**, indicando a los Healers que
+  lancen Palabra de Poder: Escudo o Sanación Rápida antes de que el DPS reciba el golpe fatal.
+
+■ **Conexión con TerrorSquadAI**:
+  El Cerebro Táctico (TSAI) lee el estado de maná y vida de toda la banda desde HealBot. 
+  Si el maná global de los Healers baja del 15%, TSAI ordena automáticamente a los DPS 
+  que usen pausas tácticas o mitigación de daño.
+
+■ **Diagrama de la Mente de Enjambre**:
+
+```mermaid
+graph TD
+    classDef combat fill:#4B0082,stroke:#9370DB,stroke-width:2px,color:#fff;
+    classDef core fill:#2C0000,stroke:#FF0000,stroke-width:2px,color:#fff;
+    HB["💚 HealBot<br/>(Soporte Vital)"]:::combat
+    TM["📊 TerrorMeter<br/>(Detección de Amenaza)"]:::combat
+    TSAI["🧠 TerrorSquadAI<br/>(Comandante Táctico)"]:::core
+    
+    TM ==>|Alerta de Agro Peligroso| HB
+    HB -.->|Estado de Maná/Vida| TSAI
+    TSAI ==>|Prioridades de Sanación Automática| HB
+```
+
+═══════════════════════════════════════════════════════════════════════════════
   CHANGELOG
 ═══════════════════════════════════════════════════════════════════════════════
 
