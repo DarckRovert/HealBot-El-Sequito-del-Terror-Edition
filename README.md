@@ -185,3 +185,15 @@ Agradecimientos Especiales:
   El Séquito del Terror
 
 ═══════════════════════════════════════════════════════════════════════════════
+
+---
+
+## ?? Comunidad y Gobernanza
+
+Este proyecto es parte del ecosistema **El S�quito del Terror**. Nos comprometemos a mantener un ambiente sano y profesional:
+
+- ?? **[C�digo de Conducta](./CODE_OF_CONDUCT.md)**: Nuestras normas de convivencia.
+- ?? **[Gu�a de Contribuci�n](./CONTRIBUTING.md)**: C�mo ayudar a expandir este addon.
+- ??? **[Licencia](./LICENSE)**: Este proyecto est� bajo la Licencia MIT.
+
+---
