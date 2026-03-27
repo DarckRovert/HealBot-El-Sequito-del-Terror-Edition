@@ -1,4 +1,4 @@
-## Interface: 11200
+﻿## Interface: 11200
 ## Title: HealBot - El Séquito del Terror Edition
 ## Notes: Panel modernizado con barras personalizables para sanación y decursive | Por DarckRovert (Elnazzareno)
 ## Author: DarckRovert (Elnazzareno) - El Séquito del Terror
