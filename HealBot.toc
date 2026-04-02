@@ -1,8 +1,8 @@
 ## Interface: 11200
-## Title: HealBot - El Séquito del Terror Edition
+## Title: |cffffffffHealBot |r|cff00ccff[Séquito del Terror]|r
 ## Notes: Panel modernizado con barras personalizables para sanación y decursive | Por DarckRovert (Elnazzareno)
 ## Author: El Séquito del Terror
-## Version: 9.3.0 [God-Tier]
+## Version: 9.3.1 [God-Tier]
 ## SavedVariables: HealBot_Config
 HealBot_Constants.lua
 HealBot_Localization.es.lua
