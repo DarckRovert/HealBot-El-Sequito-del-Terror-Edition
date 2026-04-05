@@ -1,48 +1,44 @@
-# HealBot — v9.3.0 [God-Tier] 💚⚔️
+# HealBot — El Séquito del Terror Edition 💉🛡️
 
-> **Panel de sanación modernizado para El Séquito del Terror.** Sanación quirúrgica y decursive integrado para Turtle WoW.
+> **The ultimate healing interface for Turtle WoW.** Una versión ultra-optimizada con perfiles específicos para el clan **El Séquito del Terror**.
 
-[![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-blue.svg)](./LICENSE)
-[![Versión](https://img.shields.io/badge/version-9.3.0--God--Tier-green)](./CHANGELOG.md)
-
----
-
-## 💚 ¿Qué es HealBot?
-
-HealBot es un panel de sanación y gestión de banda diseñado para la edición del Séquito del Terror. Muestra barras de vida interactivas de todos los miembros del grupo/raid con soporte para clic derecho (decursive), alertas visuales y integración con WCS_Brain.
-
-## 🚀 Características
-
-| Función | Descripción |
-|---|---|
-| **Barras de Vida** | Barras configurable por clase, con colores por estado (veneno, maldición, enfermedad, magia) |
-| **Click Healing** | Clic izquierdo/derecho/medio configurable para hechizos |
-| **HoT Tracker** | Seguimiento visual de hechizos de sanación periódica activos |
-| **Decursive** | Eliminación de estados negativos con un clic |
-| **Alertas** | Notificación de bajo maná, muertes y rez pendientes |
-| **Brain Sync** | Sincronización con WCS_Brain para estadísticas de HPS |
-
-## ⚙️ Instalación
-
-1. Extrae en Interface\AddOns\HealBot\.
-2. Activa el addon.
-3. Usa /hb para abrir la configuración.
-
-## 💻 Comandos
-
-| Comando | Descripción |
-|---|---|
-| /hb | Abrir configuración |
-| /hb show | Mostrar panel de banda |
-| /hb hide | Ocultar panel |
-| /hb lock | Bloquear posición del panel |
-| /hb reset | Resetear configuración |
-
-## 🕸️ Gobernanza
-
-- ⚖️ [Licencia MIT](./LICENSE)
-- 🤝 [Código de Conducta](./CODE_OF_CONDUCT.md)
-- ��️ [Guía de Contribución](./CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-Sequito--Edition-red)](./CHANGELOG.md)
+[![World of Warcraft](https://img.shields.io/badge/WoW-1.12.1-orange)](https://turtle-wow.org)
 
 ---
-© 2024 **DarckRovert (Elnazzareno)** — El Séquito del Terror
+
+## 💉 ¿Qué ofrece esta edición?
+
+HealBot Sequito Edition rediseña la gestión de salud en raids con:
+
+- **Perfiles de Clan**: Configuraciones óptimas para cada clase sanadora del clan.
+- **Dark Theme Nativo**: Estética oscura con texturas de alta definición para prevenir la fatiga visual.
+- **Integración WCS_Brain**: Priorización automática de curación basada en la importancia táctica de los miembros (Raid Leaders > Tanks > DPS).
+- **Threat Monitor Integrado**: Alertas visuales directamente en las barras de vida cuando un miembro tiene el agro.
+- **Micro-Optimización**: Reducción del uso de memoria y CPU al gestionar grupos de 40 personas.
+
+## 🚀 Instalación & Uso
+
+1.  Extrae en `Interface\AddOns\HealBot\`.
+2.  Al entrar al juego, usa `/hb h` para ver la lista de comandos.
+3.  Selecciona el perfil **"El Séquito"** desde la pestaña de opciones.
+
+## 🏗️ Suite de Documentación (Wiki)
+
+Organiza tu sanación:
+
+- 📐 **[Arquitectura](./wiki/Architecture.md)**: Cómo se procesan los eventos de sanación y agro.
+- 🛠️ **[Guía de API](./wiki/API_Guide.md)**: Hooks para registrar nuevos buffs de sanación.
+- ❓ **[FAQ](./wiki/FAQ.md)**: Solución de problemas de visualización de debuffs.
+- 📖 **[Manual de Usuario](./wiki/User_Manual.md)**: Guía detallada de hechizos y asignación de clics.
+
+## 🔗 Ecosistema Integrado
+
+HealBot es el corazón vital de:
+- [WCS_Brain](file:///e:/Turtle%20Wow/Interface/AddOns/WCS_Brain)
+- [BigWigs](file:///e:/Turtle%20Wow/Interface/AddOns/BigWigs)
+
+---
+© 2026 **DarckRovert (Elnazzareno)** — El Séquito del Terror.
+*Sintaxis Lua 5.0 Estándar para Turtle WoW.*
