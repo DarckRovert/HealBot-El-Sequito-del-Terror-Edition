@@ -1295,13 +1295,13 @@ function HealBot_Options_Debuff_Reset()
   if classEN=="PRIEST" or classEN=="DRUID" or classEN=="PALADIN" or classEN=="SHAMAN" then
     local spell = HealBot_Config.CDCLeftText[UnitClass("player")];
     HealBot_DebuffWatch = {[HEALBOT_DISEASE_en]="NO", [HEALBOT_MAGIC_en]="NO", [HEALBOT_POISON_en]="NO", [HEALBOT_CURSE_en]="NO" }
-    if spell ~= "None" then
+    if spell and spell ~= "None" and type(HealBot_Debuff_Types[spell])=="table" then
       table.foreach(HealBot_Debuff_Types[spell], function (index,debuff)
         HealBot_DebuffWatch[debuff]="YES";
       end)
     end
     spell = HealBot_Config.CDCRightText[UnitClass("player")];
-    if spell ~= "None" then
+    if spell and spell ~= "None" and type(HealBot_Debuff_Types[spell])=="table" then
       table.foreach(HealBot_Debuff_Types[spell], function (index,debuff)
         HealBot_DebuffWatch[debuff]="YES";
       end)
