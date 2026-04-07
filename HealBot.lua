@@ -524,6 +524,7 @@ end
 
 function HealBot_FindHealSpells()
   local id = 1;
+  local RealHealing = 0;
   if InitSpells>0 then NeedEquipUpdate=1; return; end
 
   HealBot_Heals = { player = {}, pet = {}, party = {} };

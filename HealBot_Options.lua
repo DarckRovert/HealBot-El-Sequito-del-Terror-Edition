@@ -1156,19 +1156,21 @@ end
 function HealBot_Options_CDCButLeft_DropDown()
   local classEN=HealBot_UnitClass("player")
   if classEN=="PRIEST" or classEN=="DRUID" or classEN=="PALADIN" or classEN=="SHAMAN" then
-    local class=UnitClass("Player");
+    local class=UnitClass("player");
     local DebuffSpells_List = HealBot_Options_GetDebuffSpells_List(class)
     local info = {};
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_CDCButLeft_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for i=1, getn(DebuffSpells_List), 1 do
-      local spell=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[i]));
-      if spell then
-        local info = {};
-        info.text = spell;
-        info.func = HealBot_Options_CDCButLeft_OnSelect;
-        UIDropDownMenu_AddButton(info);
+    if DebuffSpells_List then
+      for i=1, getn(DebuffSpells_List), 1 do
+        local spell=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[i]));
+        if spell then
+          local info = {};
+          info.text = spell;
+          info.func = HealBot_Options_CDCButLeft_OnSelect;
+          UIDropDownMenu_AddButton(info);
+        end
       end
     end
   end
@@ -1177,19 +1179,21 @@ end
 function HealBot_Options_CDCButRight_DropDown()
   local classEN=HealBot_UnitClass("player")
   if classEN=="PRIEST" or classEN=="DRUID" or classEN=="PALADIN" or classEN=="SHAMAN" then
-    local class=UnitClass("Player");
+    local class=UnitClass("player");
     local DebuffSpells_List = HealBot_Options_GetDebuffSpells_List(class)
     local info = {};
     info.text = HEALBOT_WORDS_NONE;
     info.func = HealBot_Options_CDCButRight_OnSelect;
     UIDropDownMenu_AddButton(info);
-    for i=1, getn(DebuffSpells_List), 1 do
-      local spell=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[i]));
-      if spell then
-        local info = {};
-        info.text = spell;
-        info.func = HealBot_Options_CDCButRight_OnSelect;
-        UIDropDownMenu_AddButton(info);
+    if DebuffSpells_List then
+      for i=1, getn(DebuffSpells_List), 1 do
+        local spell=HealBot_GetSpellName(HealBot_GetSpellId(DebuffSpells_List[i]));
+        if spell then
+          local info = {};
+          info.text = spell;
+          info.func = HealBot_Options_CDCButRight_OnSelect;
+          UIDropDownMenu_AddButton(info);
+        end
       end
     end
   end

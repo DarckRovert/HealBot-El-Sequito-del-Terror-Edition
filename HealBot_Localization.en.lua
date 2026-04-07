@@ -8,7 +8,7 @@
 -- Original: Holgaard's HealBot
 -- ═══════════════════════════════════════════════════════════════════════════
 
-HEALBOT_VERSION = "v4.0 - El Séquito del Terror Edition [Máximo Nivel]";
+HEALBOT_VERSION = "v1.12.0 [Heal-Tier]";
 
 -------------
 -- ENGLISH --

@@ -1,35 +1,36 @@
----
-name: "🐞 Bug Report — Professional Healing Orchestrator (HealBot)"
-about: "Reporta un error técnico en HealBot v9.4.0+"
-title: "[BUG] Descripción breve del problema"
+﻿---
+name: "ðŸž Bug Report â€” Professional Healing Orchestrator (HealBot)"
+about: "Reporta un error tÃ©cnico en HealBot v1.12.0+"
+title: "[BUG] DescripciÃ³n breve del problema"
 labels: ["bug", "healing-error"]
 assignees: darckrovert
 
 ---
 
-## 📝 Descripción del Problema
-Describe de manera directa y técnica qué anomalía presenta el orquestador de sanación.
+## ðŸ“ DescripciÃ³n del Problema
+Describe de manera directa y tÃ©cnica quÃ© anomalÃ­a presenta el orquestador de sanaciÃ³n.
 
-## 🚀 Pasos para Reproducir
+## ðŸš€ Pasos para Reproducir
 1.  Estar en grupo de banda: [ej: Raid de 40].
 2.  Hacer clic en el marco de: [ej: Unidad 7].
-3.  Observar el fallo visual o lógico: [ej: El hechizo no se lanza o la salud de la barra no se actualiza].
+3.  Observar el fallo visual o lÃ³gico: [ej: El hechizo no se lanza o la salud de la barra no se actualiza].
 
-## 📊 Entorno Vital
-- **Versión de HealBot**: [9.4.0 Omni-Tier]
+## ðŸ“Š Entorno Vital
+- **VersiÃ³n de HealBot**: [1.12.0 Heal-Tier]
 - **Unidad Afectada**: [ej: Ally, Raid Group]
 - **AddOns en conflicto**: [ej: BigWigs, pfUI]
 
-## 📁 Logs (Medical Logger)
+## ðŸ“ Logs (Medical Logger)
 Pega el error LUA completo.
 
 ```lua
--- PEGA EL ERROR AQUÍ
+-- PEGA EL ERROR AQUÃ
 ```
 
-## 📸 Evidencia Visual
+## ðŸ“¸ Evidencia Visual
 Adjunta capturas si el problema es de renderizado de marcos o colores de agro Diamond Tier.
 
 ---
-© 2026 **DarckRovert** — El Séquito del Terror.
-*Soberanía de vida para la conquista de Azeroth.*
+Â© 2026 **DarckRovert** â€” El SÃ©quito del Terror.
+*SoberanÃ­a de vida para la conquista de Azeroth.*
+

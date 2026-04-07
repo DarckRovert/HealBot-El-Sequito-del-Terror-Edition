@@ -8,7 +8,7 @@
 -- ESPAÑOL --
 --------------
 
-HEALBOT_VERSION = "v4.0 - El Séquito del Terror [Máximo Nivel]";
+HEALBOT_VERSION = "v1.12.0 [Heal-Tier]";
 
 HEALBOT_ADDON = "HealBot " .. HEALBOT_VERSION;
 HEALBOT_LOADED = " cargado. Creado por DarckRovert (Elnazzareno) para El Séquito del Terror";
@@ -171,7 +171,7 @@ HEALBOT_ACTION_TITLE      = "HealBot - El Séquito del Terror";
 HEALBOT_ACTION_OPTIONS    = "Opciones";
 HEALBOT_ACTION_ABORT      = "Abortar";
 
-HEALBOT_OPTIONS_TITLE         = "HealBot v2.0 - El Séquito del Terror";
+HEALBOT_OPTIONS_TITLE         = "HealBot v1.12.0 [Heal-Tier]";
 HEALBOT_OPTIONS_DEFAULTS      = "Predeterminado";
 HEALBOT_OPTIONS_CLOSE         = "Cerrar";
 HEALBOT_OPTIONS_TAB_GENERAL   = "General";

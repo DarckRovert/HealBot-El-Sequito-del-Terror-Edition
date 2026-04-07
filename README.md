@@ -1,9 +1,9 @@
-# HealBot — Professional Healing Orchestrator (v9.4.0 [Omni-Tier]) 🏥🛡️
+# HealBot — Elite Healing (v1.12.0 [Heal-Tier]) 🏥⚔️
 
 > **The definitive healing solution for Turtle WoW.** Optimizado para el clan **El Séquito del Terror** con soporte completo para la trinidad de sanación, decursive inteligente y una interfaz Apex-Tier reconstruida por **DarckRovert**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-v9.4.0--Omni--Tier-blue)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v1.12.0--Heal--Tier-red)](./CHANGELOG.md)
 [![World of Warcraft](https://img.shields.io/badge/WoW-1.12.1--Turtle-orange)](https://turtle-wow.org)
 [![Support](https://img.shields.io/badge/Support-Ko--fi-blue)](https://ko-fi.com/darckrovert)
 
