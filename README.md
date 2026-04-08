@@ -35,12 +35,12 @@ Es un sistema integral de sanación mediante clics que permite asignar hechizos 
 
 ## 🏗️ Suite de Documentación (Wiki)
 
-Domina la vida de tu raid en nuestra base de conocimientos:
+Domina la vida de tu raid en nuestra base de conocimientos oficial:
 
-- 📐 **[Arquitectura de Sanación](./wiki/Architecture.md)**: Cómo gestionamos HealBot_StatusEngine.
-- 🛠️ **[Guía de API de Healer](./wiki/API_Guide.md)**: Hooks para alertas de BigWigs.
-- ❓ **[FAQ de Boticas](./wiki/FAQ.md)**: ¿Por qué no se lanzan mis hechizos al hacer clic?
-- 📖 **[Manual del Taumaturgo](./wiki/User_Manual.md)**: Guía de configuración de spells y buffs.
+- 🏰 **[Arquitectura de Sanación](https://github.com/DarckRovert/HealBot-El-Sequito-del-Terror-Edition/wiki/Arquitectura-(Extended))**: Cómo gestionamos HealBot_StatusEngine.
+- 🛠️ **[Guía de API de Healer](https://github.com/DarckRovert/HealBot-El-Sequito-del-Terror-Edition/wiki/Guía-de-API)** / **[API Guide](https://github.com/DarckRovert/HealBot-El-Sequito-del-Terror-Edition/wiki/API-Guide-(English))**.
+- ❓ **[FAQ de Boticas](https://github.com/DarckRovert/HealBot-El-Sequito-del-Terror-Edition/wiki/FAQ)**: ¿Por qué no se lanzan mis hechizos al hacer clic?
+- 📖 **[Manual del Taumaturgo](https://github.com/DarckRovert/HealBot-El-Sequito-del-Terror-Edition/wiki/Manual-de-Usuario)** / **[User Manual](https://github.com/DarckRovert/HealBot-El-Sequito-del-Terror-Edition/wiki/User-Manual-(English))**.
 
 ## 🚀 Despliegue Rápido (Heal-Flow)
 
